@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.2s;
+    padding-top: 60px;
+  }
+
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #bbb;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  .active{
+    font-weight: bold;
+  }
+
+  .gray-text{
+    color: #cccccc;
+  }
+
+  .light-text{
+    font-weight: 100;
+  }
+
+  .bold-text{
+    font-weight: 600;
+  }
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<div id="leftMenu" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" id="btnMenuClose">&times;</a>
+  <a href="#" clickablePageItem="true" pageViewName="ogDegeriDegistirme">- OG Değeri Değiştirme</a>
+  <a href="#" clickablePageItem="true" pageViewName="abvHesaplama">- ABV Hesaplama</a>
+</div>
+
+<span style="font-size:25px;cursor:pointer" id="btnMenuOpen">&#9776; Menü</span>
+
+<div class="container">
+  <div class="row">
+    <div class="col ">
+
+      <!-- main page -->
+      <div id="pageView_main" pageViewItem="true">
+        <h3 class="d-flex justify-content-center align-items-center gray-text light-text" style="margin-top: 30vh;">Menüden hesaplama aracı seçiniz.</h3>
+      </div>
+
+      <!-- OG Değeri Değiştirme page -->
+      <div id="pageView_ogDegeriDegistirme" pageViewItem="true" style="display: none; margin-top: 20px;">
+
+        <p class="gray-text">
+          * Bu araç sayesinde hazırladığınız karışımın OG değerini arttırmak veya azaltmak için eklemeniz gereken ürün miktarını öğrenebilirsiniz.
+        </p>
+
+        <div class="form-group">
+          <label for="ogDegeriDegistirme_currentVolume" class="bold-text">Şuanki Karışımın Hacmi (L):</label>
+          <input type="number" class="form-control" id="ogDegeriDegistirme_currentVolume" placeholder="Örn.: 23">
+        </div>
+
+        <div class="form-group">
+          <label for="ogDegeriDegistirme_currentOgValue" class="bold-text">Şuanki OG Değeri:</label>
+          <input type="number" class="form-control" id="ogDegeriDegistirme_currentOgValue" placeholder="Örn.: 1.040">
+        </div>
+
+        <div class="form-group">
+          <label for="ogDegeriDegistirme_desiredOgValue" class="bold-text">Ulaşmak istediğiniz OG Değeri:</label>
+          <input type="number" class="form-control" id="ogDegeriDegistirme_desiredOgValue" placeholder="Örn.: 1.050">
+        </div>
+
+        <div class="form-group">
+          <label for="ogDegeriDegistirme_productToUse" class="bold-text">Kullanmak İstediğiniz Ürün:</label>
+          <select class="form-control" name="" id="ogDegeriDegistirme_productToUse">
+            <option value="Toz Şeker">Toz Şeker</option>
+            <option value="Dekstroz">Dekstroz</option>
+            <option value="Su">Su</option>
+          </select>
+        </div>
+
+        <button id="ogDegeriDegistirme_hesaplaBtn" class="btn btn-success"> Hesapla </button>
+
+        <p id="ogDegeriDegistirme_calculatedResultText" style="display: none; margin-top: 20px;"></p>
+
+      </div>
+
+      <!-- ABV Hesaplama page -->
+      <div id="pageView_abvHesaplama" pageViewItem="true" style="display: none; margin-top: 20px;">
+
+        <p class="gray-text">
+          * Bu araç sayesinde biranızın alkol oranını hesaplayabilirsiniz.
+        </p>
+
+        <div class="form-group">
+          <label for="abvHesaplama_ogValue" class="bold-text">OG Değeri:</label>
+          <input type="number" class="form-control" id="abvHesaplama_ogValue" placeholder="Örn.: 1.040">
+        </div>
+
+        <div class="form-group">
+          <label for="abvHesaplama_fgValue" class="bold-text">FG Değeri:</label>
+          <input type="number" class="form-control" id="abvHesaplama_fgValue" placeholder="Örn.: 1.005">
+        </div>
+
+        <button id="abvHesaplama_hesaplaBtn" class="btn btn-success"> Hesapla </button>
+
+        <p id="abvHesaplama_calculatedResultText" style="display: none; margin-top: 20px;"></p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+  // menu functions 
+  function openMenu(){
+    $('#leftMenu').css('width', '250px')
+  }
+  function closeMenu(){
+    $('#leftMenu').css('width', '0px')
+  }
+
+  // menu buttons click event
+  $('#btnMenuClose').click(function(){
+    closeMenu()
+  })
+  $('#btnMenuOpen').click(function(){
+    openMenu()
+  })
+
+  // left menu item click event
+  $('#leftMenu a[clickablePageItem="true"]').click(function(){
+    $('#leftMenu a[clickablePageItem="true"]').removeClass('active')
+    $(this).addClass('active')
+    let pageToView = $(this).attr('pageViewName')
+
+    $('div[pageViewItem="true"]').hide()
+    $('#pageView_' + pageToView).show()
+    closeMenu()
+  })
+
+  //#region og değeri değiştirme page functions
+
+  // karışıma eklenecek madde miktarını hesaplayıp döndürür
+  function ogDegeriDegistirme_calculatedDesiredOG(currentVolume, currentOg, desiredOg, productToUse){
+    /**
+     *    d = m/V, V = d/m
+     */
+    let m_product
+    let m_mix     = currentVolume * currentOg
+    let v_mix     = currentVolume
+    let d_final   = desiredOg
+    let d_product = productToUse == 'Toz Şeker' ? 1.59 : (productToUse == 'Dekstroz' ? 1.56 : 1)
+    
+    m_product = ((d_final * v_mix * d_product) - (m_mix * d_product)) / (d_product - d_final)
+    
+    return (m_product * 1000).toFixed(1)
+  }
+
+  $('#ogDegeriDegistirme_hesaplaBtn').click(function(){
+    let currentVolume = +$('#ogDegeriDegistirme_currentVolume').val()
+    let currentOg     = +$('#ogDegeriDegistirme_currentOgValue').val()
+    let desiredOg     = +$('#ogDegeriDegistirme_desiredOgValue').val()
+    let productToUse  = $('#ogDegeriDegistirme_productToUse').val()
+
+    if(currentVolume == '') alert('Lütfen karışımın şuanki hacmini giriniz.')
+    else{
+      if(currentOg == '') alert('Lütfen karışımın şuanki OG değerini giriniz.')
+      else{
+        if(desiredOg == '') alert('Lütfen ulaşmak istediğiniz OG değerini giriniz.')
+        else{
+          let calulcatedProductValue = ogDegeriDegistirme_calculatedDesiredOG(currentVolume, currentOg, desiredOg, productToUse)
+          let unitType = productToUse == 'Su' ? 'mL' : 'g'
+
+          $('#ogDegeriDegistirme_calculatedResultText').html(`
+            Karışıma <b>${calulcatedProductValue} ${unitType} ${productToUse}</b> eklemeniz gerekiyor.
+          `)
+
+          $('#ogDegeriDegistirme_calculatedResultText').show()
+        }
+      }
+    }
+
+  })
+
+  //#endregion
+
+
+    //#region abv hesaplama page functions
+
+  // karışıma eklenecek madde miktarını hesaplayıp döndürür
+  function abvHesaplama_calculatedAbv(ogValue, fgValue){
+    // ABV = (OG – FG) * 131.25
+    //let calculatedAbv = (ogValue - fgValue) * 131.25
+    let calculatedAbv = 76.08 * (ogValue - fgValue) / (1.775 - ogValue) * fgValue / 0.794
+    return calculatedAbv.toFixed(2)
+  }
+
+  $('#abvHesaplama_hesaplaBtn').click(function(){
+    let ogValue   = +$('#abvHesaplama_ogValue').val()
+    let fgValue   = +$('#abvHesaplama_fgValue').val()
+
+    if(ogValue == '') alert('Lütfen karışımın OG değerini giriniz.')
+    else{
+      if(fgValue == '') alert('Lütfen karışımın FG giriniz.')
+      else{
+        let calulcatedAbvValue = abvHesaplama_calculatedAbv(ogValue, fgValue)
+
+        $('#abvHesaplama_calculatedResultText').html(`
+          Biranız <b>%${calulcatedAbvValue}</b> alkollü olacak.
+        `)
+
+        $('#abvHesaplama_calculatedResultText').show()
+      }
+    }
+
+  })
+
+  //#endregion
+
+
+</script>
+   
+</body>
+</html> 
